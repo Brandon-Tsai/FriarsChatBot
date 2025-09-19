@@ -6,7 +6,7 @@ import os
 
 client = OpenAI()   # reads API key from OPENAI_API_KEY env variable
 
-MODEL = "ft:gpt-3.5-turbo-0125:personal::CHOURDgX"  # replace with your fine-tuned model
+MODEL = "ft:gpt-4.1-2025-04-14:personal::CHZLrjmU"  # replace with your fine-tuned model
 
 def main():
     print("Chatbot ready! Type 'exit' to quit.")

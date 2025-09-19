@@ -10,7 +10,7 @@ file = client.files.create(
 # Create fine-tune job
 job = client.fine_tuning.jobs.create(
     training_file=file.id,
-    model="gpt-3.5-turbo"   # or another supported base model
+    model="gpt-4.1-2025-04-14"   # or another supported base model
 )
 
 print("Job ID:", job.id)

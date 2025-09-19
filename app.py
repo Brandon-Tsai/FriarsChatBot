@@ -16,7 +16,7 @@ def ask():
     user_input = request.form["message"]
 
     response = openai.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0125:personal::CHOURDgX",
+        model="ft:gpt-4.1-2025-04-14:personal::CHZLrjmU",
         messages=[{"role": "user", "content": user_input}]
     )
 
