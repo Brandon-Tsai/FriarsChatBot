@@ -84,7 +84,7 @@
             })
             .then(res => res.json())
             .then(data => {
-                chatbox.innerHTML += `<div><b>Brandon:</b> ${data.answer}</div>`;
+                chatbox.innerHTML += `<div><b>Brandon-Bot:</b> ${data.answer}</div>`;
                 chatbox.scrollTop = chatbox.scrollHeight;
             });
         });
