@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Friars Chatbot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            background-color: #ffffff;
+            width: 500px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #chat {
+            flex-grow: 1;
+            padding: 20px;
+            height: 400px;
+            overflow-y: auto;
+            background-color: #f0f0f0;
+        }
+
+        .user-message, .brandon-message {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .brandon-message {
+            background-color: #e0e0e0;
+            color: #333;
+            align-self: flex-start;
+        }
+
+        .input-container {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 15px;
+            border: none;
+            font-size: 16px;
+            border-radius: 0;
+        }
+
+        #sendBtn {
+            padding: 0 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #sendBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #chat::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div id="chat"></div>
+        <div class="input-container">
+            <input type="text" id="userInput" placeholder="Type your message..." />
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById("userInput").value;
+            if (!message) return;
+
+            const chatDiv = document.getElementById("chat");
+            
+            // Add user message
+            const userMsg = document.createElement("div");
+            userMsg.className = "user-message";
+            userMsg.innerHTML = `<b>You:</b> ${message}`;
+            chatDiv.appendChild(userMsg);
+
+            // Send to Flask backend
+            const response = await fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "message=" + encodeURIComponent(message)
+            });
+
+            const data = await response.json();
+
+            // Add Brandon's response
+            const brandonMsg = document.createElement("div");
+            brandonMsg.className = "brandon-message";
+            brandonMsg.innerHTML = `<b>Brandon:</b> ${data.answer}`;
+            chatDiv.appendChild(brandonMsg);
+
+            document.getElementById("userInput").value = "";
+            chatDiv.scrollTop = chatDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
