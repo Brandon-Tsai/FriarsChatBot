@@ -15,9 +15,8 @@ def home():
 def ask():
     user_input = request.form["message"]
 
-    # Use new ChatCompletion API syntax
-    response = openai.ChatCompletion.create(
-        model="ft:gpt-3.5-turbo-0125:personal::CHOURDgX",  # your fine-tuned model
+    response = openai.chat.completions.create(
+        model="ft:gpt-3.5-turbo-0125:personal::CHOURDgX",
         messages=[{"role": "user", "content": user_input}]
     )
 
